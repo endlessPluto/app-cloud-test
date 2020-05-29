@@ -8,9 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="app-cloud" />
-        <module name="app-cloud-client" />
-        <module name="app-cloud-eureka" />
         <module name="app-cloud-common" />
+        <module name="app-cloud-eureka" />
+        <module name="app-cloud-client" />
         <module name="app-cloud-consumer" />
       </profile>
     </annotationProcessing>

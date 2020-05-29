@@ -193,7 +193,7 @@ public class StringUtils
     /**
      * 数字型字符串转整形
      * 
-     * @param String 
+     * @param str
      * @return String
      */
     public static int StringToInt(String str)
@@ -213,7 +213,7 @@ public class StringUtils
     /**
      * 数字型字符串转长整形
      * 
-     * @param String
+     * @param str
      * @return String
      */
     public static long StringToLong(String str)
@@ -233,7 +233,7 @@ public class StringUtils
     /**
      * 数字型字符串转浮点型
      * 
-     * @param String
+     * @param str
      * @return String
      */
     public static float StringToFloat(String str)
@@ -253,7 +253,7 @@ public class StringUtils
     /**
      * 数字型字符串转双精度浮点型
      * 
-     * @param String
+     * @param str
      * @return String
      */
     public static double StringToDouble(String str)
@@ -273,8 +273,7 @@ public class StringUtils
     /**
      * 过滤sql注入字符
      * 
-     * @param Exception
-     * @param Log
+     * @param str
      * @return void
      */
     public static String sql_inj(String str)
@@ -331,68 +330,6 @@ public class StringUtils
         }
         return " nvl(" + tableAs + "begin_date,'200012')<='" + endDate + "' and nvl(" + tableAs
                + "end_date,'999912')>='" + beginDate + "'";
-    }
-
-    /**
-     * 显示 获取系统时间
-     * 
-     * @param value
-     * @return String
-     */
-    public static String getSystemDate()
-    {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sysdate = sdf.format(date);
-        return sysdate;
-    }
-
-    /**
-     * 显示 根据传入格式获取系统时间
-     * 
-     * @param value
-     * @return String
-     */
-    public static String getSystemDate(String format)
-    {
-        Date date = new Date();
-        String sysdate = "";
-        try
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            sysdate = sdf.format(date);
-        }
-        catch (Exception e)
-        {
-            sysdate = "时间格式错误";
-        }
-        return sysdate;
-    }
-
-    /**
-     * 显示 传入时间增加制定月份
-     * 
-     * @param value
-     * @return String
-     */
-    public static String addMonths(String inputFormat, String outputFormat, String inputTime,
-                                   int addMonth)
-    {
-        Calendar calendar = Calendar.getInstance();
-        String sysdate = "";
-        try
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat(inputFormat);
-            calendar.setTime(sdf.parse(inputTime));
-            calendar.add(Calendar.MONTH, addMonth);
-            sdf.applyPattern(outputFormat);
-            sysdate = sdf.format(calendar.getTime());
-        }
-        catch (Exception e)
-        {
-            sysdate = "时间格式错误";
-        }
-        return sysdate;
     }
 
     /**

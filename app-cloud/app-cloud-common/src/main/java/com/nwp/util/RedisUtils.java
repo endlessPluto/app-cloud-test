@@ -11,11 +11,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author riemann
- * @date 2020/03/30 21:59
+ * Redis工具类
  */
 @Component
-public class RedisUtil {
+public class RedisUtils {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

@@ -1,20 +1,31 @@
 package com.nwp.appcloudconsumer.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.nwp.appcloudconsumer.entity.Student;
 import com.nwp.appcloudconsumer.service.ITestService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
+import com.nwp.util.DateUtils;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ClusterOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/test")
+@Log4j2
 public class TestController {
 
     @Autowired
@@ -22,50 +33,81 @@ public class TestController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    /**
+     * 列表测试
+     * @return
+     */
     @RequestMapping("/getList")
     @ResponseBody
     public List<Student> getList() {
-//        List<Student> list = testService.getList();
+        List<Student> list = testService.getList();
+        return list;
+    }
+
+    /**
+     * 测试redis
+     * @return
+     */
+    @RequestMapping("/redisGetDemo")
+    @ResponseBody
+    public Object redisGetDemo() {
         ValueOperations ops = redisTemplate.opsForValue();
         ops.set("name", "shaung");
-        Object k1 = ops.get("name");
-        System.out.println(k1);
-        return null;
+        Object name = ops.get("name");
+        return name;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    /**
+     * 导出测试
+     */
+    @RequestMapping("/simpleWrite")
     @ResponseBody
-    public String defaultLogin() {
-        return "首页";
+    public void simpleWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String date = DateUtils.getDate();
+        String fileName = "测试导出1-" + date;
+        // 这里 需要指定写用哪个class去写
+        ExcelWriter excelWriter = EasyExcel.write(getOutputStream(fileName, response), Student.class).build();
+        WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+        excelWriter.write(testService.getList(), writeSheet);
+        // 千万别忘记finish 会帮忙关闭流
+        excelWriter.finish();
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        // 从SecurityUtils里边创建一个 subject
-        Subject subject = SecurityUtils.getSubject();
-        // 在认证提交前准备 token（令牌）
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        // 执行认证登陆
+    /**
+     * 导出文件时为Writer生成OutputStream
+     *
+     * @param fileName
+     * @param response
+     * @return
+     */
+    private static OutputStream getOutputStream(String fileName, HttpServletResponse response) throws Exception {
         try {
-            subject.login(token);
-        } catch (UnknownAccountException uae) {
-            return "未知账户";
-        } catch (IncorrectCredentialsException ice) {
-            return "密码不正确";
-        } catch (LockedAccountException lae) {
-            return "账户已锁定";
-        } catch (ExcessiveAttemptsException eae) {
-            return "用户名或密码错误次数过多";
-        } catch (AuthenticationException ae) {
-            return "用户名或密码不正确！";
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf8");
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xlsx");
+            response.setHeader("Pragma", "public");
+            response.setHeader("Cache-Control", "no-store");
+            response.addHeader("Cache-Control", "max-age=0");
+            return response.getOutputStream();
+        } catch (IOException e) {
+            throw new Exception("导出excel表格失败!", e);
         }
-        if (subject.isAuthenticated()) {
-            return "登录成功";
-        } else {
-            token.clear();
-            return "登录失败";
+    }
+
+    /**
+     * 测试数据
+     * @return
+     */
+    private List<Student> data() {
+        List<Student> list = new ArrayList<Student>();
+        for (int i = 0; i < 10; i++) {
+            Student stu = new Student();
+            stu.setId(String.valueOf(i));
+            stu.setName("字符串"+i);
+            list.add(stu);
         }
+        return list;
     }
 
 }
