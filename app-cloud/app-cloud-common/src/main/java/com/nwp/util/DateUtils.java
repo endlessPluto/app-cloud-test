@@ -119,6 +119,13 @@ public class DateUtils {
 		return convertSuccess;
 	}
 
+	/**
+	 * 获取两个日期中的日期列表
+	 * @param dateS
+	 * @param dateE
+	 * @return
+	 * @throws ParseException
+	 */
 	public static List<String> getDateDays(String dateS, String dateE) throws ParseException {
 		List<String> list = new ArrayList<String>();
 		Date d1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateS);// 定义起始日期
