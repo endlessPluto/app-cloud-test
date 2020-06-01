@@ -316,7 +316,6 @@ public class DateUtils {
 			} else {
 				slist.add(year + i + "01");
 			}
-
 		}
 		// 定义当前期间的1号的date对象
 		List<String> lastDayList = new ArrayList<String>();
@@ -490,7 +489,6 @@ public class DateUtils {
 		date = calendar.getTime(); // 这个时间就是日期往后推一天的结果
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String dateString = formatter.format(date);
-
 		return dateString;
 	}
 
@@ -526,7 +524,6 @@ public class DateUtils {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-
 		return list;
 	}
 
@@ -553,7 +550,6 @@ public class DateUtils {
 		dd.setTime(d1);// 设置日期起始时间
 		List<String> list = new ArrayList<String>();
 		while (dd.getTime().before(d2)) {// 判断是否到结束日期
-
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String str = sdf.format(dd.getTime());
 			list.add(str);
@@ -660,7 +656,6 @@ public class DateUtils {
 			logger.error("异常:" + e.getMessage(), e);
 		}
 		String lastDay = dateDay.format(voucherDate);
-
 		return lastDay;
 	}
 
@@ -812,7 +807,6 @@ public class DateUtils {
 			} else
 				j++;
 		}
-
 	}
 
 	/**
@@ -850,7 +844,6 @@ public class DateUtils {
 			} else
 				j++;
 		}
-
 	}
 
 }

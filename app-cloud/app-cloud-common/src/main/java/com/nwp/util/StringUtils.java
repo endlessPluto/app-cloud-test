@@ -14,8 +14,6 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * 字符串处理类
- * 
- * @author lfl
  */
 public class StringUtils
 {
