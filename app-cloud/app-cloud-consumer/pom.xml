@@ -11,7 +11,7 @@
     <groupId>com.nwp</groupId>
     <artifactId>app-cloud-consumer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>app-cloud-consumer</name>
+    <name>test-consumer</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

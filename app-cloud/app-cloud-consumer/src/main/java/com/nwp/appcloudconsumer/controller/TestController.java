@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.nwp.appcloudconsumer.entity.Student;
 import com.nwp.appcloudconsumer.service.ITestService;
 import com.nwp.util.DateUtils;
+import com.nwp.util.IpconfigUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,7 +40,15 @@ public class TestController {
      */
     @RequestMapping("/getList")
     @ResponseBody
-    public List<Student> getList() {
+    public List<Student> getList(HttpServletRequest request) throws Exception {
+        String ipAddress = IpconfigUtils.getIpAddress();
+        String ip = IpconfigUtils.getIp(request);
+        String macAddress = IpconfigUtils.getMacAddress();
+        String os = IpconfigUtils.getOS();
+        System.out.println("服务端"+ipAddress);
+        System.out.println("客户端"+ip);
+        System.out.println("macAddress"+macAddress);
+        System.out.println("操作系统"+os);
         List<Student> list = testService.getList();
         return list;
     }
