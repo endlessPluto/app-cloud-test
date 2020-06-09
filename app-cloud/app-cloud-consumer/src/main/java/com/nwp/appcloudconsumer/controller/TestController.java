@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,7 @@ public class TestController {
      */
     @RequestMapping("/getList")
     @ResponseBody
+    @PreAuthorize("hasRole('admin')")
     public List<Student> getList(HttpServletRequest request) throws Exception {
         String ipAddress = IpconfigUtils.getIpAddress();
         String ip = IpconfigUtils.getIp(request);

@@ -31,4 +31,5 @@ public class CompanyServiceImpl implements ICompanyService {
 
         return new ResultInfo();
     }
+
 }
