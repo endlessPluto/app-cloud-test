@@ -1,0 +1,45 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AppCloudConsumerApplication",
+            "request": "launch",
+            "mainClass": "com.nwp.appcloudconsumer.AppCloudConsumerApplication",
+            "projectName": "app-cloud-consumer"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Attach)",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "<debug port of the debuggee>"
+        },
+        {
+            "type": "edge",
+            "request": "attach",
+            "name": "Attach to Edge",
+            "port": 2015,
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AppCloudEurekaApplication<app-cloud-eureka>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.nwp.appcloudeureka.AppCloudEurekaApplication",
+            "projectName": "app-cloud-eureka",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AppCloudClientApplication<app-cloud-client>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.nwp.appcloudclient.AppCloudClientApplication",
+            "projectName": "app-cloud-client",
+            "args": ""
+        }
+    ]
+}
